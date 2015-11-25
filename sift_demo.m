@@ -83,7 +83,7 @@ descr2=uint8(512*descr2) ;
 tic ; 
 match_threshold = 1.1;%这里是我改过的！！！
 matches=siftmatch( descr1, descr2 ,match_threshold) ;
-score = sift_score(descr1, descr2, matches, match_threshold)
+score = sift_score(descr1, descr2, matches, match_threshold)%此处是自行添加。
 fprintf('Matched in %.3f s\n', toc) ;
 
 figure(2) ; clf ;%这里开始只是为了画图的，不做计算
