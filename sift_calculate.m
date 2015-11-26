@@ -1,11 +1,11 @@
-function template_database = sift_calculate(image)
+function template_database = sift_calculate(image,threshold)
 
 I=imreadbw(image) ;
 S=2 ;
 I=I-min(I(:)) ;
 I=I/max(I(:)) ;
 [frames,descr,gss,dogss] = sift( I, 'Verbosity', 1, 'Threshold', ...
-                                     0.06, 'NumLevels', S ) ;
+                                     threshold, 'NumLevels', S ) ;
                                
 descr=uint8(512*descr) ;
 %template_database{1}=frames;
