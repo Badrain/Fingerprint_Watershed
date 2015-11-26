@@ -1,6 +1,7 @@
 function IM = gray2rgb(im_gray,coor)
 
 %im_gray=im_gray*255;
+coor = im2bw(coor,graythresh(coor));
 d = size(im_gray);
 rgb = zeros(d(1),d(2),3);
 IM1 = rgb(:,:,1);
