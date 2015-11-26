@@ -28,13 +28,14 @@ for l=1:168
         end
     end
 end
-save(sample_database,'sample_database');
-save(template_database,'template_database');
-for i=1:168
+save('sample_database.mat','sample_database');
+save('template_database.mat','template_database');
+for i=1:148
     score = 0;
     score_max = 0;
     num_max = 0;
-    for j=1:168
+    i
+    for j=1:148
         score = fusion_match_score(sample_database{i},template_database{j});
         if score > score_max
             score_max = score;
