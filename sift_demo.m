@@ -56,10 +56,10 @@ fprintf('Computing frames and descriptors.\n') ;
 %[frames1,descr1,gss1,dogss1] = sift( I1, 'Verbosity', 1 ) ;
 %[frames2,descr2,gss2,dogss2] = sift( I2, 'Verbosity', 1 ) ;
 [frames1,descr1,gss1,dogss1] = sift( I1, 'Verbosity', 1, 'Threshold', ...
-                                     0.06, 'NumLevels', S ) ;
+                                     0.1, 'NumLevels', S ) ;
                                  
 [frames2,descr2,gss2,dogss2] = sift( I2, 'Verbosity', 1, 'Threshold', ...
-                                     0.06, 'NumLevels', S ) ;
+                                     0.1, 'NumLevels', S ) ;
 %figure(11) ; clf ; plotss(dogss1) ; colormap gray ;
 %figure(12) ; clf ; plotss(dogss2) ; colormap gray ;
 %drawnow ;

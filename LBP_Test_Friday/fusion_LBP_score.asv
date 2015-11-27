@@ -1,0 +1,20 @@
+function score = fusion_LBP_score(sample_LBP,template_LBP)
+
+
+
+distance_min = 100;
+for i=1:size(sample_LBP,1)
+    LBP_1 = sample_LBP(i,:);
+    for j=1:size(template_LBP,1)
+        LBP_2 = template_LBP(i,:);
+        distance = sum(((LBP_1 - LBP_2).^2) ./ (LBP_1 + LBP_2 + 0.001));
+       if distance < distance_min
+           distance_min = distance;
+       end
+    end
+    
+end
+
+
+
+end

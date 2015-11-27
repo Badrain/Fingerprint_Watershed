@@ -2,15 +2,31 @@
 clc;
 clear;
 all_coor_store = {};
-for i=1:200
+for i=1:20
     image_name = strcat('1 (', num2str(i),').jpg');
-    bgm = watershed_stepone(image_name);
-    [IM,new_coor,coor_image] = watershed_steptwo(bgm, 'binary');
-    %figure;imshow(IM);
+    mat_name = strcat('1 (', num2str(i),').mat');
+    im = imread(image_name);
+    imx = size(im,1);
+    imy = size(im,2);
+    coor_image = zeros(imx,imy);
+    un_coor = zeros(imx,imy);
+    if exist(image_name,'file')==1          %!如果已经改过的话用改过的坐标
+        load(mat_name);%读入new_coor_after
+        new_coor = new_coor_after;
+        %想要初始化new_coor_after =
+        for j=1:size(new_coor,1)
+            for k=1:size(new_coor,2)
+                coor_image(i,j)=1;%这一块是要把coor_image给搞定
+            end
+        end
+        coor_image = im2bw(coor_image,graythresh(coor_image));
+    else bgm = watershed_stepone(image_name);%!如果没有改过，重新开始提取
+         [IM,new_coor,coor_image] = watershed_steptwo(bgm, 'binary');
+    end
     [coor_insert,coor_delete] = mark_coor(image_name,coor_image);
     [new_coor_after,coor_image_after] = store_coor(new_coor,coor_image,coor_insert,coor_delete);
-    im = gray2rgb(imread(image_name),coor_image_after);
-    %all_coor_store{i} = new_coor_after;
+    un_coor = show_un_coor(image_name,mat_name);%%%%%%%%%%%%%%%%目前有问题！只能操作一次不能悔改
+    im = gray2rgb(imread(image_name),coor_image_after,un_coor);%%%%%%%%%%%%%%%%目前有问题！只能操作一次不能悔改
     coor_name = strcat('1 (',num2str(i),').mat');
     figure;imshow(im); 
     hold on;

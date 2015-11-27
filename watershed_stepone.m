@@ -1,9 +1,9 @@
-function [bgm]=watershed_stepone(image)%I是要输入的图片
+function [bgm]=watershed_stepone(image_name)%I是要输入的图片
 %% 读入图片
 %rgb=imread('fp1.bmp');
 %I = rgb2gray(rgb);
 %I=imread('271_2_2.jpg');
-I=imread(image);
+I=imread(image_name);
 %subplot(341);imshow(I),title('input image');
 I_binary = im2bw(I,graythresh(I));       %对图像二值化
 %subplot(342);imshow(I_binary,[]), title('binary of input image)')
