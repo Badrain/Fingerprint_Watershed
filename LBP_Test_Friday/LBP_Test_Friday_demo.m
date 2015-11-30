@@ -50,10 +50,11 @@ if Test_flag==1
     distance11 = sum(((combine_feature_vector_1 - combine_feature_vector_1_large).^2) ./ (combine_feature_vector_1 + combine_feature_vector_1_large + 0.001));
 end
 
+%% 这里开始是new_LBP的测试程序
 clc;
 clear;
-dir_sample = 'F:\TTDownload\DBI\Test\';
-dir_template = 'F:\TTDownload\DBII\';
+dir_sample = 'F:\BaiduYunDownload\FP data form HongKong\DBI\Test\';
+dir_template = 'F:\BaiduYunDownload\FP data form HongKong\DBII\';
 sample_LBP_database = {};
 template_LBP_database = {};
 for i=1:3%应该是168
@@ -88,8 +89,11 @@ for i=1:3%应该是168
         end
     end
 end
-save('sample_database.mat','sample_LBP_database');
-save('template_database.mat','template_LBP_database');
+%以上是把每幅图像的LBP计算好，然后下面存储好
+save('sample_LBP_database.mat','sample_LBP_database');
+save('template_LBP_database.mat','template_LBP_database');
+
+%以下是开始比较计算相似度similar了！
 correct_count = 0;
 for i=1:3%应该是148
     similar = 0;
@@ -107,4 +111,5 @@ for i=1:3%应该是148
         correct_count = correct_count + 1
     end
 end
-accuracy = correct_count / 148 * 100;
+accuracy = correct_count / 148 * 100
+save('accuracy_new_LBP.mat','accuracy');
