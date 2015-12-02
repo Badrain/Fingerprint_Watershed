@@ -3,8 +3,9 @@ function LBP_feature = LBP_feature(image_name,mat_name,lbpSize)%该函数是读入图像
     mode = 2;
 
     I=imread(image_name);
-    load(mat_name);%得到的是new_coor_after文件
+    %load(mat_name);%得到的是new_coor_after文件
     mat_name_after = [];
+    new_coor_after=mat_name;%in order to merge sample and template manipulate
     for i=1:size(new_coor_after,1)
         if new_coor_after(i,3)==1
             mat_name_after = [mat_name_after;new_coor_after(i,1:2)];%得到的是去除了标记“0”的两列数据
@@ -28,7 +29,7 @@ function LBP_feature = LBP_feature(image_name,mat_name,lbpSize)%该函数是读入图像
             end
         end
         LBP_feature = cell2mat(module_lbp);
-    elseif mode==2
+    elseif mode==2%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         num_pores = size(mat_name_after,1);%点的个数
         [rang_x,rang_y] = size(I);
         module_lbp=cell(num_pores,1);
@@ -41,11 +42,12 @@ function LBP_feature = LBP_feature(image_name,mat_name,lbpSize)%该函数是读入图像
             if ( m>lbpSize && n>lbpSize && m<rang_x-lbpSize && n<rang_y-lbpSize )%这一步排除了边界点
                 module_matrix = I(m-lbpSize:m+lbpSize,n-lbpSize:n+lbpSize); %提取矩阵模块
                 hist_output = LBP_C(module_matrix);
-                %combine_feature_vector=combine_h_feature(hist_output);
+                combine_feature_vector=combine_h_feature(hist_output);
                 module_lbp{i} = cell2mat(hist_output);
             end
         end
-        LBP_feature = cell2mat(module_lbp);%这里我需要cell型
+        %LBP_feature = cell2mat(module_lbp);%when k=1
+        LBP_feature = combine_feature_vector;%when k>1
     end
 
 
