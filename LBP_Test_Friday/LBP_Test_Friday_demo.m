@@ -1,6 +1,6 @@
 clc;
 clear;
-Test_flag = 1;
+Test_flag = 0;
 im = imread('1.jpg');
 im_large = imread('1_large.jpg');
 image_input = zeros(32,32);
@@ -75,8 +75,8 @@ else
   clear;
   error_image = '';%mark the error image's name
   error_image_num = [];%mark the error image's number
-  dir_sample = 'F:\BaiduYunDownload\FP data form HongKong\DBI\Test\';
-  dir_template = 'F:\BaiduYunDownload\FP data form HongKong\DBII\';
+  dir_sample = 'F:\TTDownload\DBI\Test\';
+  dir_template = 'F:\TTDownload\DBII\';
   sample_LBP_database = {};
   template_LBP_database = {};
   % for i=1:168%应该是168
@@ -103,7 +103,7 @@ else
   %         end
   %     end
   % end
-
+tic;
   for i=1:10%应该是168
       for j=1:1
           for k=1:1
@@ -118,8 +118,8 @@ else
               [IM_template,new_coor_template,coor_image_template,continue_cluster_flag_template] = watershed_steptwo(bgm_template,'binary');
               bgm_sample  =  watershed_stepone(image_sample);
               [IM_sample,  new_coor_sample,  coor_image_sample,  continue_cluster_flag_sample  ] = watershed_steptwo(bgm_sample,  'binary');
-              figure;imshow(gray2rgb(imread(image_sample),  coor_image_sample,  bgm_sample));
-              figure;imshow(gray2rgb(imread(image_template),coor_image_template,bgm_template));
+              %figure;imshow(gray2rgb(imread(image_sample),  coor_image_sample,  bgm_sample));
+              %figure;imshow(gray2rgb(imread(image_template),coor_image_template,bgm_template));
               if continue_cluster_flag_template~=0 && continue_cluster_flag_sample~=0%this part is new for error
                   new_coor_after_template = [new_coor_template,ones(size(new_coor_template,1),1)];
                   %save(mat_template,'new_coor_after');
@@ -166,3 +166,4 @@ else
   
 end
 
+toc;

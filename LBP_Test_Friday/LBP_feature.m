@@ -30,6 +30,7 @@ function LBP_feature = LBP_feature(image_name,mat_name,lbpSize)%该函数是读入图像
         end
         LBP_feature = cell2mat(module_lbp);
     elseif mode==2%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        combine_feature_vector = [];
         num_pores = size(mat_name_after,1);%点的个数
         [rang_x,rang_y] = size(I);
         module_lbp=cell(num_pores,1);
@@ -42,8 +43,8 @@ function LBP_feature = LBP_feature(image_name,mat_name,lbpSize)%该函数是读入图像
             if ( m>lbpSize && n>lbpSize && m<rang_x-lbpSize && n<rang_y-lbpSize )%这一步排除了边界点
                 module_matrix = I(m-lbpSize:m+lbpSize,n-lbpSize:n+lbpSize); %提取矩阵模块
                 hist_output = LBP_C(module_matrix);
-                combine_feature_vector=combine_h_feature(hist_output);
-                module_lbp{i} = cell2mat(hist_output);
+                combine_feature_vector=[combine_feature_vector;combine_h_feature(hist_output)];
+                %module_lbp{i} = cell2mat(hist_output);
             end
         end
         %LBP_feature = cell2mat(module_lbp);%when k=1
