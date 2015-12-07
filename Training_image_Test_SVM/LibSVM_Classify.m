@@ -11,7 +11,7 @@ tic;
     mat_name = strcat('1 (',num2str(i),').mat');
     %load(mat_name);%得到的是new_coor_after文件
     
-    [LBP_feature_1,LBP_feature_2] = LBP_MAX_feature(image_name,mat_name,16);%得到所有的需要的满足要求的LBP特征，并在下一步存储
+    [LBP_feature_1,LBP_feature_2] = LBP_MAX_feature(image_name,mat_name,5);%得到所有的需要的满足要求的LBP特征，并在下一步存储
     Positive_LBP_feature = [Positive_LBP_feature;LBP_feature_1];%得到36列的？
     Negative_LBP_feature = [Negative_LBP_feature;LBP_feature_2];
 %end
@@ -26,7 +26,7 @@ save('svm_model','model');
 toc;
 tic;
 disp 'predict_label_self:';
-[predict_labe_test] = svmpredict(LBP_feature_label,LBP_feature_inst,model);
+[predict_label_test] = svmpredict(LBP_feature_label,LBP_feature_inst,model);
 toc;
 image_name = '1 (8).jpg';
 mat_name = '1 (8).mat';

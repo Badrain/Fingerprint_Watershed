@@ -85,6 +85,8 @@ if mode==1
         end
     end
     LBP_feature_2 = cell2mat(module_lbp);
+    
+    
 elseif mode==2
     %这一大块是用来处理是un_pore_coor的(LBP_feature_2)    
         combine_feature_vector = [];
@@ -106,8 +108,7 @@ elseif mode==2
         end
         %LBP_feature = cell2mat(module_lbp);%when k=1
         LBP_feature_2 = combine_feature_vector;%when k>1
-        
-        
+     
 %这一大块是用来处理是pore_coor的(LBP_feature_1)
         combine_feature_vector = [];
       num_pores = size(pore_coor,1);%点的个数
