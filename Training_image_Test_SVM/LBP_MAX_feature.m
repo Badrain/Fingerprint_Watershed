@@ -100,7 +100,7 @@ elseif mode==2
             m = un_pore_coor(i,1);%m是y n是x
             n = un_pore_coor(i,2);
             if ( m>lbpSize && n>lbpSize && m<rang_x-lbpSize && n<rang_y-lbpSize )%这一步排除了边界点
-                module_matrix = I(m-lbpSize:m+lbpSize,n-lbpSize:n+lbpSize); %提取矩阵模块
+                module_matrix = I(m-lbpSize:m+lbpSize-1,n-lbpSize:n+lbpSize-1); %提取矩阵模块
                 hist_output = LBP_C(module_matrix);
                 combine_feature_vector=[combine_feature_vector;combine_h_feature(hist_output)];
                 %module_lbp{i} = cell2mat(hist_output);
@@ -121,7 +121,7 @@ elseif mode==2
             m = pore_coor(i,1);%m是y n是x
             n = pore_coor(i,2);
             if ( m>lbpSize && n>lbpSize && m<rang_x-lbpSize && n<rang_y-lbpSize )%这一步排除了边界点
-                module_matrix = I(m-lbpSize:m+lbpSize,n-lbpSize:n+lbpSize); %提取矩阵模块
+                module_matrix = I(m-lbpSize:m+lbpSize-1,n-lbpSize:n+lbpSize-1); %提取矩阵模块
                 hist_output = LBP_C(module_matrix);
                 combine_feature_vector=[combine_feature_vector;combine_h_feature(hist_output)];
                 %module_lbp{i} = cell2mat(hist_output);

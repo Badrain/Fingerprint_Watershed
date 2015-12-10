@@ -2,7 +2,7 @@
 clc;
 clear;
 all_coor_store = {};
-for i=8:20
+for i=4:20
     image_name = strcat('1 (', num2str(i),').jpg');
     mat_name = strcat('1 (', num2str(i),').mat');
     im = imread(image_name);
@@ -10,12 +10,14 @@ for i=8:20
     imy = size(im,2);
     coor_image = zeros(imx,imy);
     un_coor = zeros(imx,imy);
-    if exist(mat_name,'file')~=0==1          %!如果已经改过的话用改过的坐标
+    if exist(mat_name,'file')~=0          %!如果已经改过的话用改过的坐标
         load(mat_name);%读入new_coor_after
         new_coor = new_coor_after;
         %想要初始化new_coor_after =
         for j=1:size(new_coor,1)
+            if new_coor(j,3)==1
                 coor_image(new_coor(j,1),new_coor(j,2))=1;%这一块是要把coor_image给搞定
+            end
         end
         coor_image = im2bw(coor_image,graythresh(coor_image));
     else bgm = watershed_stepone(image_name);%!如果没有改过，重新开始提取

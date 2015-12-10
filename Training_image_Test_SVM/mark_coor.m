@@ -13,11 +13,14 @@ function [coor_insert,coor_delete] = mark_coor(im_gray,coor_image)%º¯Êý×÷ÓÃ£º½«Ô
     while(1)
         [x,y,button]=ginput(1);
         if button==1%×ó¼üµã»÷
+            disp('insert');
             plot(x,y,'p', 'MarkerSize', 6, 'MarkerEdgeColor', 'r', 'MarkerFaceColor', 'r');
             [x,y]
             coor_insert=[coor_insert;[x,y]];
         elseif button==3%ÓÒ¼üµã»÷
+            disp('delete');
             plot(x,y,'p', 'MarkerSize', 6, 'MarkerEdgeColor', 'g', 'MarkerFaceColor', 'g');
+            [x,y]
             coor_delete=[coor_delete;[x,y]];
         elseif button==2%ÖÐ¼üµã»÷ÔòÍË³ö
             break;
