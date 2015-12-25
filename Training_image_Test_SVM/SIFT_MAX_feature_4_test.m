@@ -1,6 +1,6 @@
-function show_svm_test(image_name,mat_name,predict_label,lbpSize)
-%该函数用于figure出svm_test的结果
+function [SIFT_feature_1,SIFT_feature_2] = SIFT_MAX_feature_4_test(image_name,mat_name,siftSize)%该函数是读入图像和坐标点来得到同时满足极大值和标记的对应坐标所有LBP特征
 
+%加载图像以及坐标
     I=imread(image_name);
     imx = size(I,1);
     imy = size(I,2);
@@ -16,8 +16,7 @@ function show_svm_test(image_name,mat_name,predict_label,lbpSize)
         end
     end
 %把I_coor进行膨胀
-
-se_coor = strel('square', 5);
+    se_coor = strel('square', 5);
     I_coor = imdilate(I_coor,se_coor);
      
 %对图像进行预处理并得到局部极大值
@@ -29,7 +28,7 @@ se_coor = strel('square', 5);
     Iobrcbr = imcomplement(Iobrcbr);
     max = imregionalmax(Iobrcbr);
     
-%判断该坐标是否也同时符合局部极大值
+%% 判断该坐标是否也同时符合局部极大值
     max_coor = zeros(imx,imy);%存储是pore点的二值图
     un_coor = zeros(imx,imy);%存储不是pore点的二值图
     pore_coor = [];
@@ -45,8 +44,9 @@ se_coor = strel('square', 5);
             end
         end
     end
-  
-%用滑动窗口筛选去除多余的点
+    %figure;imshow(gray2rgb(I,max_coor,un_coor));
+
+%% 用滑动窗口筛选去除多余的点
     pore_coor_after = [];
     un_pore_coor_after = [];
     im = max_coor;
@@ -62,9 +62,8 @@ se_coor = strel('square', 5);
             end
         end
     end
-        se = strel('square', 2);%为了节省计算量
+    se = strel('square', 2);%为了节省计算量
     im = imerode(im,se);
-
     for m=1:size(pore_coor,1)
         if im(pore_coor(m,1),pore_coor(m,2))==1%根据滑块筛选pore_coor
             pore_coor_after = [pore_coor_after;pore_coor(m,:)];
@@ -82,48 +81,14 @@ se_coor = strel('square', 5);
 
     pore_coor = pore_coor_after;
     un_pore_coor = un_pore_coor_after;
-
+ 
     
-    
-    
-    num_pores = size(pore_coor,1);%计算pore_core的个数，在后面会用到。
-    [rang_x,rang_y]=size(I);
-    m=[];
-    n=[];
-    pore_coor_after = [];
-    un_pore_coor_after = [];
-    for i=1:num_pores  
-        m = pore_coor(i,1);%m是y n是x
-        n = pore_coor(i,2);
-        if ( m>lbpSize/2 && n>lbpSize/2 && m<rang_x-lbpSize/2 && n<rang_y-lbpSize/2 )%这一步排除了边界点
-            pore_coor_after = [pore_coor_after;pore_coor(i,1:2)];
-        end
-    end
-    
-    num_un_pores = size(un_pore_coor,1);%计算pore_core的个数，在后面会用到。
-    [rang_x,rang_y]=size(I);
-    m=[];
-    n=[];
-    for i=1:num_un_pores  
-        m = un_pore_coor(i,1);%m是y n是x
-        n = un_pore_coor(i,2);
-        if ( m>lbpSize/2 && n>lbpSize/2 && m<rang_x-lbpSize/2 && n<rang_y-lbpSize/2 )%这一步排除了边界点
-            un_pore_coor_after = [un_pore_coor_after;un_pore_coor(i,1:2)];
-        end
-    end
-
-    
-coor_image = zeros(imx,imy);
-un_coor_image = zeros(imx,imy);
-coor = [pore_coor_after;un_pore_coor_after];
-coor = [coor,predict_label];
-for i=1:size(coor,1)
-    if coor(i,3)==1
-        coor_image(coor(i,1),coor(i,2))=1;
-    elseif coor(i,3)==-1
-        un_coor_image(coor(i,1),coor(i,2))=1;  
-    end
-end
-figure;imshow(gray2rgb(I,coor_image,un_coor_image));
-
+%% 这一大块是用来处理是un_pore_coor的(LBP_feature_2)
+        SIFT_feature_2 = [];
+        SIFT_feature_2 = [SIFT_feature_2;sift_feature_extr(I,un_pore_coor,siftSize)];
+     
+%% 这一大块是用来处理是pore_coor的(LBP_feature_1)
+        SIFT_feature_1 = [];
+        SIFT_feature_1 = [SIFT_feature_1;sift_feature_extr(I,pore_coor,siftSize)];
+        
 end

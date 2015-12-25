@@ -52,7 +52,7 @@ disp('calculate the test feature');
 tic;
 image_name = '1 (20).jpg';
 mat_name = '1 (20).mat';
-load('svm_model_all_4x4');
+load('svm_LBP_model_all_4x4');
 Positive_LBP_feature = [];
  Negative_LBP_feature = [];
 [LBP_feature_1,LBP_feature_2] = LBP_MAX_feature_4_test(image_name,mat_name,4);%得到所有的需要的满足要求的LBP特征，并在下一步存储
