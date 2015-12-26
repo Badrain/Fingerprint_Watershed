@@ -65,5 +65,5 @@ toc;
 tic;
 disp 'predict_label_test:';
 [predict_label_test] = svmpredict(SIFT_feature_label_test,SIFT_feature_inst_test,model);
-show_svm_test(image_name,mat_name,predict_label_test,8);
+show_svm_SIFT_test(image_name,mat_name,predict_label_test,8);
 toc;

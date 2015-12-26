@@ -5,7 +5,7 @@ Positive_LBP_feature_all = [];
 Negative_LBP_feature_all = [];
 %% train
 tic;
-sample_list = [2 8 9 12 13 14];
+sample_list = [2,3,7,8,9,11:19];%[2 8 9 12 13 14];
 for l = 1:length(sample_list)
     i = sample_list(l);
     image_name = strcat('1 (',num2str(i),').jpg');
@@ -39,7 +39,7 @@ toc;
 tic;
 disp 'svmtraining:';
 model = svmtrain(LBP_feature_label , LBP_feature_inst); 
-save('svm_model_all_4x4','model');
+save('svm_LBP_model_all_4x4','model');
 toc;
 tic;
 disp 'predict_label_self:';
