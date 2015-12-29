@@ -1,4 +1,4 @@
-function show_svm_LBP_test(image_name,mat_name,predict_label,lbpSize)
+function Ferly_show_svm_LBP_test(image_name,mat_name,predict_label,lbpSize)
 %该函数用于figure出svm_test的结果
 
     I=imread(image_name);
@@ -20,15 +20,16 @@ function show_svm_LBP_test(image_name,mat_name,predict_label,lbpSize)
 se_coor = strel('square', 5);
     I_coor = imdilate(I_coor,se_coor);
      
-%对图像进行预处理并得到局部极大值
-    se = strel('square', 2);%目前最成功的在ppt里，值是“3”（针对fp1.bmp)
-    Ie = imerode(I, se);
-    Iobr = imreconstruct(Ie, I);
-    Iobrd = imdilate(Iobr, se);
-    Iobrcbr = imreconstruct(imcomplement(Iobrd), imcomplement(Iobr));
-    Iobrcbr = imcomplement(Iobrcbr);
-    max = imregionalmax(Iobrcbr);
-    
+% %对图像进行预处理并得到局部极大值
+%     se = strel('square', 2);%目前最成功的在ppt里，值是“3”（针对fp1.bmp)
+%     Ie = imerode(I, se);
+%     Iobr = imreconstruct(Ie, I);
+%     Iobrd = imdilate(Iobr, se);
+%     Iobrcbr = imreconstruct(imcomplement(Iobrd), imcomplement(Iobr));
+%     Iobrcbr = imcomplement(Iobrcbr);
+%     max = imregionalmax(Iobrcbr);
+
+max = imregionalmax(I);
 %判断该坐标是否也同时符合局部极大值
     max_coor = zeros(imx,imy);%存储是pore点的二值图
     un_coor = zeros(imx,imy);%存储不是pore点的二值图
@@ -46,43 +47,43 @@ se_coor = strel('square', 5);
         end
     end
   
-%用滑动窗口筛选去除多余的点
-    pore_coor_after = [];
-    un_pore_coor_after = [];
-    im = max_coor;
-    im(un_coor==1)=1;
-    scale = 8;
-    for i=1:2:imx
-        for j=1:2:imy
-            if (i-scale/2+1)>=1 && (j-scale/2+1)>=1 && (i+scale/2)<=imx && (j+scale/2)<=imy
-                temp = im((i-scale/2+1):(i+scale/2),(j-scale/2+1):(j+scale/2));
-                if length(find(temp~=0))>=12
-                    im((i-scale/2+1):(i+scale/2),(j-scale/2+1):(j+scale/2)) = 0;
-                end
-            end
-        end
-    end
-        se = strel('square', 2);%为了节省计算量
-    im = imerode(im,se);
-
-    for m=1:size(pore_coor,1)
-        if im(pore_coor(m,1),pore_coor(m,2))==1%根据滑块筛选pore_coor
-            pore_coor_after = [pore_coor_after;pore_coor(m,:)];
-        else
-            max_coor(pore_coor(m,1),pore_coor(m,2))=0;
-        end
-    end
-    for n=1:size(un_pore_coor,1)
-        if im(un_pore_coor(n,1),un_pore_coor(n,2))==1%根据滑块筛选un_pore_coor
-            un_pore_coor_after = [un_pore_coor_after;un_pore_coor(n,:)];
-        else
-            un_coor(un_pore_coor(n,1),un_pore_coor(n,2))=0;
-        end
-    end 
-
-    pore_coor = pore_coor_after;
-    un_pore_coor = un_pore_coor_after;
-
+% %% 用滑动窗口筛选去除多余的点
+%     pore_coor_after = [];
+%     un_pore_coor_after = [];
+%     im = max_coor;
+%     im(un_coor==1)=1;
+%     scale = 8;
+%     for i=1:2:imx
+%         for j=1:2:imy
+%             if (i-scale/2+1)>=1 && (j-scale/2+1)>=1 && (i+scale/2)<=imx && (j+scale/2)<=imy
+%                 temp = im((i-scale/2+1):(i+scale/2),(j-scale/2+1):(j+scale/2));
+%                 if length(find(temp~=0))>=12
+%                     im((i-scale/2+1):(i+scale/2),(j-scale/2+1):(j+scale/2)) = 0;
+%                 end
+%             end
+%         end
+%     end
+%         se = strel('square', 2);%为了节省计算量
+%     im = imerode(im,se);
+% 
+%     for m=1:size(pore_coor,1)
+%         if im(pore_coor(m,1),pore_coor(m,2))==1%根据滑块筛选pore_coor
+%             pore_coor_after = [pore_coor_after;pore_coor(m,:)];
+%         else
+%             max_coor(pore_coor(m,1),pore_coor(m,2))=0;
+%         end
+%     end
+%     for n=1:size(un_pore_coor,1)
+%         if im(un_pore_coor(n,1),un_pore_coor(n,2))==1%根据滑块筛选un_pore_coor
+%             un_pore_coor_after = [un_pore_coor_after;un_pore_coor(n,:)];
+%         else
+%             un_coor(un_pore_coor(n,1),un_pore_coor(n,2))=0;
+%         end
+%     end 
+% 
+%     pore_coor = pore_coor_after;
+%     un_pore_coor = un_pore_coor_after;
+% 
     
     
     

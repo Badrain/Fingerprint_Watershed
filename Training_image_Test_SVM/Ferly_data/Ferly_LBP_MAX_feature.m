@@ -20,15 +20,16 @@ mode=2;%"2"表示new_LBP模式
     se_coor = strel('square', 5);
     I_coor = imdilate(I_coor,se_coor);
      
-%对图像进行预处理并得到局部极大值
-    se = strel('square', 2);%目前最成功的在ppt里，值是“3”（针对fp1.bmp)
-    Ie = imerode(I, se);
-    Iobr = imreconstruct(Ie, I);
-    Iobrd = imdilate(Iobr, se);
-    Iobrcbr = imreconstruct(imcomplement(Iobrd), imcomplement(Iobr));
-    Iobrcbr = imcomplement(Iobrcbr);
-    max = imregionalmax(Iobrcbr);
-    
+% %对图像进行预处理并得到局部极大值
+%     se = strel('square', 2);%目前最成功的在ppt里，值是“3”（针对fp1.bmp)
+%     Ie = imerode(I, se);
+%     Iobr = imreconstruct(Ie, I);
+%     Iobrd = imdilate(Iobr, se);
+%     Iobrcbr = imreconstruct(imcomplement(Iobrd), imcomplement(Iobr));
+%     Iobrcbr = imcomplement(Iobrcbr);
+%     max = imregionalmax(Iobrcbr);
+
+max = imregionalmax(I);
 %判断该坐标是否也同时符合局部极大值
     max_coor = zeros(imx,imy);%存储是pore点的二值图
     un_coor = zeros(imx,imy);%存储不是pore点的二值图

@@ -8,7 +8,7 @@ function [coor_insert,coor_delete] = mark_coor(im_gray,coor_image)%º¯Êý×÷ÓÃ£º½«Ô
     coor_insert=[];
     coor_delete=[];
     IM = gray2rgb(im,coor_image);
-    imshow(IM);                  %ÏÔÊ¾Í¼Æ¬
+    figure;imshow(IM);                  %ÏÔÊ¾Í¼Æ¬
     hold on;
     while(1)
         [x,y,button]=ginput(1);

@@ -5,7 +5,7 @@ Positive_LBP_feature_all = [];
 Negative_LBP_feature_all = [];
 %% train
 tic;
-sample_list = 1;%[2,3,7,8,9,11:19];%[2 8 9 12 13 14];
+sample_list = 1;
 for l = 1:length(sample_list)
     i = sample_list(l);
     image_name = strcat('1 (',num2str(i),').jpg');
@@ -16,7 +16,7 @@ for l = 1:length(sample_list)
     Positive_LBP_feature = [];%每一幅图片的正样本
     Negative_LBP_feature = [];%每一幅图片的负样本
     if exist(Positive_feature_name,'file')==0 || exist(Negative_feature_name,'file')==0
-        [LBP_feature_1,LBP_feature_2] = LBP_MAX_feature(image_name,mat_name,4);%得到所有的需要的满足要求的LBP特征，并在下一步存储
+        [LBP_feature_1,LBP_feature_2] = Ferly_LBP_MAX_feature(image_name,mat_name,2);%得到所有的需要的满足要求的LBP特征，并在下一步存储
         Positive_LBP_feature = [Positive_LBP_feature;LBP_feature_1];
         Negative_LBP_feature = [Negative_LBP_feature;LBP_feature_2];
     else
@@ -39,23 +39,24 @@ toc;
 tic;
 disp 'svmtraining:';
 model = svmtrain(LBP_feature_label , LBP_feature_inst); 
-save('svm_LBP_model_all_4x4','model');
+if exist('svm_LBP_model_all_2x2_ferly.mat','file')==0
+    save('svm_LBP_model_all_2x2_ferly','model');
+end
 toc;
 tic;
 disp 'predict_label_self:';
 [predict_label_test] = svmpredict(LBP_feature_label,LBP_feature_inst,model);
 toc;
 %% test
-clc;
 clear;
 disp('calculate the test feature');
 tic;
-image_name = 'F:\BaiduYunDownload\FP data form HongKong\DBI\Test\2_1_1.jpg';%'1 (20).jpg';
-mat_name = '1 (20).mat';
-load('svm_LBP_model_all_4x4');
+image_name = 'finger (2).bmp';%'1 (20).jpg';
+mat_name = 'finger (2).mat';
+load('svm_LBP_model_all_2x2_ferly');
 Positive_LBP_feature = [];
  Negative_LBP_feature = [];
-[LBP_feature_1,LBP_feature_2] = LBP_MAX_feature_4_test(image_name,mat_name,4);%得到所有的需要的满足要求的LBP特征，并在下一步存储
+[LBP_feature_1,LBP_feature_2] = Ferly_LBP_MAX_feature(image_name,mat_name,2);%得到所有的需要的满足要求的LBP特征，并在下一步存储
 Positive_LBP_feature = [Positive_LBP_feature;LBP_feature_1];%得到36列的？
 Negative_LBP_feature = [Negative_LBP_feature;LBP_feature_2];
 LBP_feature_inst_test = [Positive_LBP_feature;Negative_LBP_feature];
@@ -64,5 +65,5 @@ toc;
 tic;
 disp 'predict_label_test:';
 [predict_label_test] = svmpredict(LBP_feature_label_test,LBP_feature_inst_test,model);
-show_svm_LBP_test(image_name,mat_name,predict_label_test,4);
+Ferly_show_svm_LBP_test(image_name,mat_name,predict_label_test,2);
 toc;

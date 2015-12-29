@@ -1,4 +1,4 @@
-function show_svm_test(image_name,mat_name,predict_label,lbpSize)
+function show_svm_SIFT_test(image_name,mat_name,predict_label,lbpSize)
 %该函数用于figure出svm_test的结果
 
     I=imread(image_name);

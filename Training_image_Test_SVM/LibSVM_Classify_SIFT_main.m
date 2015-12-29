@@ -6,7 +6,7 @@ Negative_SIFT_feature_all = [];
 %% train
 disp('Extracting sift feature:');
 tic;
-sample_list = 1;%[2 8 9 12 13 14];
+sample_list = 1;%[2,3,7,8,9,11:19];%[2 8 9 12 13 14];
 for l = 1:length(sample_list)
     i = sample_list(l);
     image_name = strcat('1 (',num2str(i),').jpg');
