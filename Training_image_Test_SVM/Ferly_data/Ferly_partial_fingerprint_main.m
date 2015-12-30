@@ -2,9 +2,9 @@
 clc;
 clear;
 all_coor_store = {};
-for i=2:2
-    image_name = strcat('finger (', num2str(i),').bmp');
-    mat_name = strcat('finger (', num2str(i),').mat');
+for i=5:5
+    image_name = strcat('1 (', num2str(i),').bmp');
+    mat_name = strcat('C:\Users\Ferly\Fingerprint_Watershed\Training_image_Test_SVM\Ferly_data\1 (', num2str(i),').mat');
     im = imread(image_name);
     imx = size(im,1);
     imy = size(im,2);
@@ -32,7 +32,7 @@ for i=2:2
     [new_coor_after,coor_image_after] = store_coor(new_coor,coor_image,coor_insert,coor_delete);
     %un_coor = show_un_coor(image_name,mat_name);%%%%%%%%%%%%%%%%目前有问题！只能操作一次不能悔改
     %im = gray2rgb(imread(image_name),coor_image_after,un_coor);%%%%%%%%%%%%%%%%目前有问题！只能操作一次不能悔改
-    coor_name = strcat('finger (', num2str(i),').mat');
+    coor_name = strcat('C:\Users\Ferly\Fingerprint_Watershed\Training_image_Test_SVM\Ferly_data\1 (', num2str(i),').mat');
     %figure;imshow(im); 
     hold on;
     [~,~,button]=ginput(1);

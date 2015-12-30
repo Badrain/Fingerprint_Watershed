@@ -5,10 +5,11 @@ Positive_LBP_feature_all = [];
 Negative_LBP_feature_all = [];
 %% train
 tic;
+disp('Time for extracting LBP features:');
 sample_list = 1;
 for l = 1:length(sample_list)
     i = sample_list(l);
-    image_name = strcat('1 (',num2str(i),').jpg');
+    image_name = strcat('1 (',num2str(i),').bmp');
     mat_name = strcat('1 (',num2str(i),').mat');
     %load(mat_name);%得到的是new_coor_after文件
     Positive_feature_name = strcat('Positive_LBP_feature_',num2str(i),'_4x4.mat');
@@ -34,7 +35,6 @@ for l = 1:length(sample_list)
 end
 LBP_feature_inst = [Positive_LBP_feature_all;Negative_LBP_feature_all];%总的正负样本
 LBP_feature_label = [ones(size(Positive_LBP_feature_all,1),1);-ones(size(Negative_LBP_feature_all,1),1)];%总样本的标签
-disp 'get feature';
 toc;
 tic;
 disp 'svmtraining:';
@@ -51,12 +51,12 @@ toc;
 clear;
 disp('calculate the test feature');
 tic;
-image_name = 'finger (2).bmp';%'1 (20).jpg';
-mat_name = 'finger (2).mat';
+image_name = '1 (2).bmp';%'1 (20).jpg';
+mat_name = '1 (2).mat';
 load('svm_LBP_model_all_2x2_ferly');
 Positive_LBP_feature = [];
  Negative_LBP_feature = [];
-[LBP_feature_1,LBP_feature_2] = Ferly_LBP_MAX_feature(image_name,mat_name,2);%得到所有的需要的满足要求的LBP特征，并在下一步存储
+[LBP_feature_1,LBP_feature_2] = Ferly_LBP_MAX_feature_4_test(image_name,mat_name,2);%得到所有的需要的满足要求的LBP特征，并在下一步存储
 Positive_LBP_feature = [Positive_LBP_feature;LBP_feature_1];%得到36列的？
 Negative_LBP_feature = [Negative_LBP_feature;LBP_feature_2];
 LBP_feature_inst_test = [Positive_LBP_feature;Negative_LBP_feature];
