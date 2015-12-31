@@ -6,7 +6,7 @@ Negative_LBP_feature_all = [];
 %% train
 tic;
 disp('Time for extracting LBP features:');
-sample_list = 1;
+sample_list = [1:5];
 for l = 1:length(sample_list)
     i = sample_list(l);
     image_name = strcat('1 (',num2str(i),').bmp');
@@ -24,10 +24,10 @@ for l = 1:length(sample_list)
         load(Positive_feature_name);
         load(Negative_feature_name);
     end
-    feature_length = size(Positive_LBP_feature,1);%！！！！！！可以考虑x2进行试验！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-    Negative_feature_num = randsample(size(Negative_LBP_feature,1),size(Positive_LBP_feature,1));
+    Negative_feature_length = size(Positive_LBP_feature,1);%！！！！！！可以考虑x2进行试验！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+    Negative_feature_num = randsample(size(Negative_LBP_feature,1),Negative_feature_length);
     Negative_LBP_feature_after = [];%经过缩减的负样本
-    for m=1:feature_length
+    for m=1:Negative_feature_length
         Negative_LBP_feature_after =  [Negative_LBP_feature_after;Negative_LBP_feature(Negative_feature_num(m),:)];
     end
     Positive_LBP_feature_all = [Positive_LBP_feature_all;Positive_LBP_feature];%总的正样本
@@ -39,9 +39,9 @@ toc;
 tic;
 disp 'svmtraining:';
 model = svmtrain(LBP_feature_label , LBP_feature_inst); 
-if exist('svm_LBP_model_all_2x2_ferly.mat','file')==0
+% if exist('svm_LBP_model_all_2x2_ferly.mat','file')==0
     save('svm_LBP_model_all_2x2_ferly','model');
-end
+% end
 toc;
 tic;
 disp 'predict_label_self:';

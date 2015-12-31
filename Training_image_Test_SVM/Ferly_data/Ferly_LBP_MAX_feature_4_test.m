@@ -160,6 +160,44 @@ elseif filter_mode==2
     pore_coor = pore_coor_after;
     un_pore_coor = un_pore_coor_after;
 %     figure;imshow(gray2rgb(I,max_coor,un_coor));
+    
+%排除大面积白色区域suceed!
+        pore_coor_after = [];
+    un_pore_coor_after = [];
+    im = max_coor;
+    im(un_coor==1)=1;
+    scale = 6;
+    for i=1:2:imx
+        for j=1:2:imy
+            if (i-scale/2+1)>=1 && (j-scale/2+1)>=1 && (i+scale/2)<=imx && (j+scale/2)<=imy
+                tmp_i_from = i-scale/2+1;
+                tmp_i_to = i+scale/2;
+                tmp_j_from = j-scale/2+1;
+                tmp_j_to = j+scale/2;
+                temp = I((tmp_i_from):(tmp_i_to),(tmp_j_from):(tmp_j_to));
+                if sum(sum(temp))>=7200
+                    im((i-scale/2+1):(i+scale/2),(j-scale/2+1):(j+scale/2)) = 0;
+                end
+            end
+        end
+    end
+    for m=1:size(pore_coor,1)
+        if im(pore_coor(m,1),pore_coor(m,2))==1%根据滑块筛选pore_coor
+            pore_coor_after = [pore_coor_after;pore_coor(m,:)];
+        else
+            max_coor(pore_coor(m,1),pore_coor(m,2))=0;
+        end
+    end
+    for n=1:size(un_pore_coor,1)
+        if im(un_pore_coor(n,1),un_pore_coor(n,2))==1%根据滑块筛选un_pore_coor
+            un_pore_coor_after = [un_pore_coor_after;un_pore_coor(n,:)];
+        else
+            un_coor(un_pore_coor(n,1),un_pore_coor(n,2))=0;
+        end
+    end 
+    pore_coor = pore_coor_after;
+    un_pore_coor = un_pore_coor_after;
+%      figure;imshow(gray2rgb(I,max_coor,un_coor));
 
 end
    
