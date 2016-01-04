@@ -2,7 +2,7 @@
 clc;
 clear;
 all_coor_store = {};
-for i=200:200
+for i=6:6
     image_name = strcat('1 (', num2str(i),').jpg');
     mat_name = strcat('1 (', num2str(i),').mat');
     im = imread(image_name);
