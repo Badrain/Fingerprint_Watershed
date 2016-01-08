@@ -95,7 +95,7 @@ elseif filter_mode==2
     Iobrcbr = imreconstruct(imcomplement(Iobrd), imcomplement(Iobr));
     Iobrcbr = imcomplement(Iobrcbr);
     max_4 = imregionalmax(Iobrcbr);
-    se = strel('square', 4);%目前最成功的在ppt里，值是“3”（针对fp1.bmp)
+    se = strel('square', 5);%目前最成功的在ppt里，值是“3”（针对fp1.bmp)
     Ie = imerode(I, se);
     Iobr = imreconstruct(Ie, I);
     Iobrd = imdilate(Iobr, se);

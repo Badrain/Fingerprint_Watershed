@@ -1,7 +1,7 @@
 % This function is used to combine the histogram feature of the lbp code
 % iamge
 function combine_feature_vector=combine_h_feature(lbp_image)
-k=2;% the blocks
+k=4;% the blocks
 mapping=myself_mapping(8);% getmapping
 bins= mapping.num;% bins
 feature_vector=zeros(1,bins*k*k);% the feature vector variant

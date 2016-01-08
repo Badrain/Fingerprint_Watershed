@@ -44,7 +44,7 @@ function [LBP_feature_1,LBP_feature_2] = LBP_MAX_feature(image_name,mat_name,lbp
             end
         end
     end
-    figure;imshow(gray2rgb(I,max_coor,un_coor));
+    %figure;imshow(gray2rgb(I,max_coor,un_coor));
 %这一大块是用来处理是pore_coor的(LBP_feature_1)
     num_pores = size(pore_coor,1);%计算pore_core的个数，在后面会用到。
     [rang_x,rang_y]=size(I);
